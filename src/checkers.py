@@ -121,6 +121,19 @@ def check_numeric_threshold(rule, clauses):
         + f" the requirement of {requirement}.",
     )
 
+def route_manual(rule, clauses):
+    clause = find_clause(rule, clauses)
+    if clause is None:
+        return absent(rule)
+    return Finding(
+        rule_id=rule["id"],
+        rule_name=rule["name"],
+        status="manual",
+        severity=rule["severity"],
+        evidence=clause.text,
+        explanation="This check requires legal judgment; routed for manual review.",
+    )
+
 NUMBER_WORDS = {
     "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6,
     "seven": 7, "eight": 8, "nine": 9, "ten": 10, "twelve": 12,
@@ -155,6 +168,7 @@ CHECKERS = {
     "presence": check_presence,
     "allowed_values": check_allowed_values,
     "numeric_threshold": check_numeric_threshold,
+    "manual": route_manual,
 }
 
 def run_rules(rules, clauses):
