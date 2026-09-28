@@ -1,0 +1,13 @@
+job assignment:
+  - position
+
+salary:
+  - wage
+  - rate
+
+working hours:
+  - working hours
+  - hours of work 
+
+termination:
+  - terminat
