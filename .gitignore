@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+.env
+
+# Never commit real contracts
+contracts/
+*.docx
+*.pdf
+!tests/fixtures/*.docx
+!tests/fixtures/*.pdf
