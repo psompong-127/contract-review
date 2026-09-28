@@ -62,7 +62,7 @@ def classify_clause(clause, keywords):
         return max(scores, key=scores.get)
     return "other"
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     lines = read_document("tests/fixtures/test contract.txt")
     keywords = load_keywords("rules/clause_keywords.yaml")
     for clause in split_into_clauses(lines):

@@ -1,11 +1,12 @@
-job assignment:
+job_assignment:
   - position
+  - job assignment
 
 salary:
   - wage
   - rate
 
-working hours:
+working_hours:
   - working hours
   - hours of work 
 
