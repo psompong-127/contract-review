@@ -14,8 +14,19 @@ def parse(fixture_name):
         clause.clause_type = classify_clause(clause, keywords)
     return clauses
 
+def test_job_assignment_clause_is_present_in_test_contract():
+    clauses = parse("test contract.txt")
+    rules = load_rules(ROOT / "rules" / "employment_agreement.yaml")
+    finding = check_presence(rules[0], clauses)
+    assert finding.status == "pass"
 
 def test_working_hours_clause_is_present_in_test_contract():
+    clauses = parse("test contract.txt")
+    rules = load_rules(ROOT / "rules" / "employment_agreement.yaml")
+    finding = check_presence(rules[0], clauses)
+    assert finding.status == "pass"
+
+def test_termination_clause_is_present_in_test_contract():
     clauses = parse("test contract.txt")
     rules = load_rules(ROOT / "rules" / "employment_agreement.yaml")
     finding = check_presence(rules[0], clauses)
