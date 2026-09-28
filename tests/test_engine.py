@@ -34,3 +34,8 @@ def test_working_hours_clause_is_present_in_test_contract():
 def test_termination_clause_is_present_in_test_contract():
     finding = check_presence(rule_by_id("TM-01"), parse("test_contract.txt"))
     assert finding.status == "pass"
+
+def test_docx_and_txt_fixtures_parse_to_same_clause_types():
+    txt = [c.clause_type for c in parse("test_contract.txt")]
+    docx = [c.clause_type for c in parse("test_contract.docx")]
+    assert txt == docx

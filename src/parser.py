@@ -16,7 +16,11 @@ HEADING_RE = re.compile(r"^\s*(\d+)\.\s+(.+)$")
 
 
 def read_document(path):
-    return Path(path).read_text(encoding="utf-8").splitlines()
+    path = Path(path)
+    if path.suffix.lower() == ".docx":
+        from docx import Document
+        return [paragraph.text for paragraph in Document(str(path)).paragraphs]
+    return path.read_text(encoding="utf-8").splitlines()
 
 
 def split_into_clauses(lines):
