@@ -7,3 +7,23 @@
   severity: medium
   rationale: Ensures that the employee is assigned to a existing position within the company.
 
+- id: HR-01
+  name: Working hours
+  clause_type: working_hours
+  check: numeric_threshold
+  unit: hours
+  min: 40
+  max: 40
+  on_violation: review
+  severity: high
+  rationale: Working hours must be within the specified range to ensure compliance with labor laws and maintain employee well-being.
+
+- id: TM-01
+  name: Termination of the Contract
+  clause_type: termination
+  check: numeric_threshold
+  unit: month
+  min: 1
+  on_violation: review
+  severity: medium
+  rationale: Termination of the contract must adhere to the specified notice period to ensure fair treatment of employees.

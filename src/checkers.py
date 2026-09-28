@@ -27,18 +27,20 @@ def find_clause(rule, clauses):
             return clause
     return None
 
+def absent(rule):
+    return Finding(
+        rule_id=rule["id"],
+        rule_name=rule["name"],
+        status="fail",
+        severity=rule["severity"],
+        evidence="",
+        explanation="No clause of this type was found in the contract.",
+    )
 
 def check_presence(rule, clauses):
     clause = find_clause(rule, clauses)
     if clause is None:
-        return Finding(
-            rule_id=rule["id"],
-            rule_name=rule["name"],
-            status="fail",
-            severity=rule["severity"],
-            evidence="",
-            explanation="No clause of this type was found in the contract.",
-        )
+        return absent(rule)
     return Finding(
         rule_id=rule["id"],
         rule_name=rule["name"],
@@ -51,14 +53,16 @@ def check_presence(rule, clauses):
 def check_allowed_values(rule, clauses):
     clause = find_clause(rule, clauses)
     if clause is None:
-        return Finding(
-            rule_id=rule["id"],
-            rule_name=rule["name"],
-            status="fail",
-            severity=rule["severity"],
-            evidence="",
-            explanation="No clause of this type was found in the contract.",
-        )
+        return absent(rule)
+    return Finding(
+        rule_id=rule["id"],
+        rule_name=rule["name"],
+        status="pass",
+        severity=rule["severity"],
+        evidence=clause.text,
+        explanation=f"Clause found under heading '{clause.heading}'.",
+    )
+
     text = clause.text.lower()
     matched = [value for value in rule["allowed"] if value.lower() in text]
     if matched:
@@ -161,7 +165,7 @@ def run_rules(rules, clauses):
     return findings
 
 if __name__ == "__main__":
-    lines = read_document("tests/fixtures/test contract.txt")
+    lines = read_document("tests/fixtures/test_contract.txt")
     keywords = load_keywords("rules/clause_keywords.yaml")
     clauses = split_into_clauses(lines)
     for clause in clauses:
