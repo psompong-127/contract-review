@@ -62,9 +62,13 @@ def classify_clause(clause, keywords):
         return max(scores, key=scores.get)
     return "other"
 
-if __name__ == "__main__":  
-    lines = read_document("tests/fixtures/test contract.txt")
-    keywords = load_keywords("rules/clause_keywords.yaml")
-    for clause in split_into_clauses(lines):
+def parse_contract(path, keywords_path):
+    keywords = load_keywords(keywords_path)
+    clauses = split_into_clauses(read_document(path))
+    for clause in clauses:
         clause.clause_type = classify_clause(clause, keywords)
+    return clauses
+
+if __name__ == "__main__":
+    for clause in parse_contract("tests/fixtures/test_contract.txt", "rules/clause_keywords.yaml"):
         print(clause.position, "|", clause.heading, "→", clause.clause_type)

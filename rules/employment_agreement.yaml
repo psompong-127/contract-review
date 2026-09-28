@@ -22,7 +22,7 @@
   name: Termination of the Contract
   clause_type: termination
   check: numeric_threshold
-  unit: month
+  unit: months
   min: 1
   on_violation: review
   severity: medium

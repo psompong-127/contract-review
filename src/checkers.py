@@ -177,14 +177,3 @@ def run_rules(rules, clauses):
         checker = CHECKERS[rule["check"]]
         findings.append(checker(rule, clauses))
     return findings
-
-if __name__ == "__main__":
-    lines = read_document("tests/fixtures/test_contract.txt")
-    keywords = load_keywords("rules/clause_keywords.yaml")
-    clauses = split_into_clauses(lines)
-    for clause in clauses:
-        clause.clause_type = classify_clause(clause, keywords)
-
-    rules = load_rules("rules/employment_agreement.yaml")
-    for finding in run_rules(rules, clauses):
-        print(finding.rule_id, finding.status.upper(), "-", finding.explanation)

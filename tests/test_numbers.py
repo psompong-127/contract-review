@@ -1,5 +1,11 @@
 from checkers import extract_numbers, normalize_numbers
 
+import pytest
+
+def test_unknown_unit_raises_clear_error():
+    with pytest.raises(ValueError):
+        extract_numbers("1 month", "month")
+
 
 def test_digits_with_word_in_front():
     assert extract_numbers("not exceed forty (40) hours per week", "hours") == [40]

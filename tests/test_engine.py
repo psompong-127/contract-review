@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from parser import read_document, split_into_clauses, load_keywords, classify_clause
+from parser import parse_contract
 
 from checkers import load_rules, check_presence, check_allowed_values
 
@@ -8,12 +8,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def parse(fixture_name):
-    lines = read_document(ROOT / "tests" / "fixtures" / fixture_name)
-    keywords = load_keywords(ROOT / "rules" / "clause_keywords.yaml")
-    clauses = split_into_clauses(lines)
-    for clause in clauses:
-        clause.clause_type = classify_clause(clause, keywords)
-    return clauses
+    return parse_contract(
+        ROOT / "tests" / "fixtures" / fixture_name,
+        ROOT / "rules" / "clause_keywords.yaml",
+    )
+
 
 print(ROOT / "rules" / "employment_agreement.yaml")
 
